@@ -8,6 +8,10 @@ import { IP_BASE_URL } from "../utilities/url";
 import { API_KEY } from "../utilities/apiKeys";
 import ipRegex from "ip-regex";
 
+import { IGeo } from "../utilities/interfaces";
+import Map from "../components/Map";
+import InfoBox from "../components/InfoBox";
+
 const schema = yup
   .object({
     ip: yup
@@ -30,23 +34,19 @@ function App() {
     resolver: yupResolver(schema),
   });
 
-  const [ipData, setIpUrl, ,] = useGet(null, null);
+  const [ipData, setIpUrl, ,] = useGet<IGeo>(null, null);
   const onSubmit = (data: IFormInput) => {
     setIpUrl(`${IP_BASE_URL}apiKey=${API_KEY}&ipAddress=${data.ip}`);
   };
 
-  if (ipData) {
-    console.log(ipData);
-  }
-
   return (
     <div className="h-screen font-rubik">
-      <header className="flex justify-center flex-col items-center pt-4 pb-16 pr-40 pl-40 bg-header-img">
-        <h1 className="mb-7 font-medium text-white text-3xl">
+      <header className="flex  flex-col items-center p-2 bg-header-img h-[40%] relative ">
+        <h1 className="mb-5 font-medium text-white text-xl bg-no-repeat bg-cover text-center md:text-3xl ">
           IP Address Tracker
         </h1>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="bg-white rounded-2xl max-w-xl w-[576px] flex">
+          <div className="bg-white rounded-2xl min-w-[250px] sm:w-96 md:max-w-xl md:w-[576px] flex">
             <input
               type="text"
               className="overflow-hidden w-11/12 pl-6 pt-4 pb-4 rounded-tl-xl rounded-bl-2xl"
@@ -59,7 +59,19 @@ function App() {
           </div>
           <p>{errors.ip?.message}</p>
         </form>
+        <div className="w-11/12 bg-white pt-4 pl-4 pb-4 pr-4 flex absolute bottom-0 translate-y-1/2 z-[1000] rounded-2xl justify-between flex-wrap md:pt-10 md:pb-10">
+          <InfoBox title="Ip Address" info={ipData?.ip || ""} />
+          <InfoBox
+            title="Location"
+            info={`${ipData?.location.city || ""} ${
+              ipData?.location.region || ipData?.location.country || ""
+            } ${ipData?.location.postalCode || ""} `}
+          />
+          <InfoBox title="Timezone" info={ipData?.location.timezone || ""} />
+          <InfoBox title="ISP" info={ipData?.isp || ""} />
+        </div>
       </header>
+      <Map ipData={ipData} />
     </div>
   );
 }
