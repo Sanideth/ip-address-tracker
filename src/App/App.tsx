@@ -41,7 +41,7 @@ function App() {
 
   return (
     <div className="h-screen font-rubik">
-      <header className="flex  flex-col items-center p-2 bg-header-img h-[40%] relative ">
+      <header className="flex  flex-col items-center p-2 pt-6 bg-header-img h-[40%] relative bg-no-repeat bg-cover ">
         <h1 className="mb-5 font-medium text-white text-xl bg-no-repeat bg-cover text-center md:text-3xl ">
           IP Address Tracker
         </h1>
