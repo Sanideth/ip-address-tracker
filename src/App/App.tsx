@@ -49,15 +49,15 @@ function App() {
           <div className="bg-white rounded-2xl min-w-[250px] sm:w-96 md:max-w-xl md:w-[576px] flex">
             <input
               type="text"
-              className="overflow-hidden w-11/12 pl-6 pt-4 pb-4 rounded-tl-xl rounded-bl-2xl"
+              className="overflow-hidden w-11/12 pl-6 pt-4 pb-4 rounded-tl-xl rounded-bl-2xl outline-none hover:cursor-pointer"
               placeholder="Search for any IP address or domain"
               {...register("ip")}
             />
-            <button className="bg-black w-1/12 rounded-tr-xl rounded-br-2xl flex justify-center items-center">
+            <button className="bg-black w-1/12 rounded-tr-xl rounded-br-2xl flex justify-center items-center hover:cursor-pointer">
               <IconArrow />
             </button>
           </div>
-          <p>{errors.ip?.message}</p>
+          <p className="text-white text-center">{errors.ip?.message}</p>
         </form>
         <div className="w-11/12 bg-white pt-4 pl-4 pb-4 pr-4 flex absolute bottom-0 translate-y-1/2 z-[1000] rounded-2xl justify-between flex-wrap md:pt-10 md:pb-10">
           <InfoBox title="Ip Address" info={ipData?.ip || ""} />
